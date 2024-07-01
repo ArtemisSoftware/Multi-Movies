@@ -1,7 +1,8 @@
 package com.artemissoftware.multimovies.data.network.dto
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@kotlinx.serialization.Serializable
+@Serializable
 internal data class MovieDto(
     val id: Int,
     val title: String,

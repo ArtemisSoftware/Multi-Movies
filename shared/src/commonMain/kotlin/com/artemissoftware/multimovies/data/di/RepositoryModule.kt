@@ -4,6 +4,6 @@ import com.artemissoftware.multimovies.data.repository.MovieRepositoryImpl
 import com.artemissoftware.multimovies.domain.repository.MovieRepository
 import org.koin.dsl.module
 
-private val repositoryModule = module {
+val repositoryModule = module {
     single<MovieRepository> { MovieRepositoryImpl(get()) }
 }
