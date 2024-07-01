@@ -5,3 +5,5 @@ abstract class Destination(
     val route: String,
     val routeWithArgs: String
 )
+
+val destinations = listOf(Route.Home)

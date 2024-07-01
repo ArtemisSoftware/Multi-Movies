@@ -22,6 +22,12 @@ class HomeViewModel(
         loadMovies()
     }
 
+    fun onTriggerEvent(event: HomeEvent){
+        when(event){
+            HomeEvent.LoadNextMovies -> {}
+        }
+    }
+
     private fun loadMovies() = with(_state){
         viewModelScope.launch {
             setLoading()
