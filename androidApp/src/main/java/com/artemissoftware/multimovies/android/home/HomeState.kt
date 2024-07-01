@@ -8,4 +8,6 @@ data class HomeState(
     var movies: List<Movie> = listOf(),
     var errorMessage: String? = null,
     var loadFinished: Boolean = false
-)
+){
+    fun isEndOfList(index: Int) = index >= movies.size - 1 && !loading && !loadFinished
+}
