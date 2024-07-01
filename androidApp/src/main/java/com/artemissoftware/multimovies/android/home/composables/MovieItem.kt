@@ -78,14 +78,14 @@ internal fun MovieItem(
             ){
                 Text(
                     text = movie.title,
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 Spacer(modifier = modifier.height(4.dp))
 
-                Text(text = movie.releaseDate, style = MaterialTheme.typography.bodyLarge)
+                Text(text = movie.releaseDate, style = MaterialTheme.typography.bodySmall)
             }
         }
     }
