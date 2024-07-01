@@ -45,6 +45,9 @@ dependencies {
 
 
     implementation(libs.coil)
+    implementation(libs.koin.android.compose)
+    implementation(libs.accompanist.systemuicontroller)
+    implementation(libs.navigation.compose)
 
     debugImplementation(libs.compose.ui.tooling)
 }

@@ -7,7 +7,10 @@ androidx-activityCompose = "1.8.0"
 serialization = "1.7.10"
 ktor = "2.2.1"
 koin = "3.3.2"
+koinCompose = "3.4.1"
 coil = "2.2.2"
+accompanist = "0.28.0"
+navigation = "2.5.3"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -28,10 +31,21 @@ ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serializatio
 
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+koin-android-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koinCompose" }
 
 # coil
 
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+
+# navigation
+
+navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
+
+# accompanist
+
+accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
+
+
 
 
 [plugins]
