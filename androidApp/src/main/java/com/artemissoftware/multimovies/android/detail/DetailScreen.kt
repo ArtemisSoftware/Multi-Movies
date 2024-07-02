@@ -18,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,9 +32,19 @@ import com.artemissoftware.multimovies.android.MyApplicationTheme
 import com.artemissoftware.multimovies.android.PreviewData
 import com.artemissoftware.multimovies.android.R
 import com.artemissoftware.multimovies.android.theme.Red
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun DetailScreen(
+    viewModel: DetailViewModel = koinViewModel()
+) {
+    DetailScreenContent(
+        state = viewModel.state.collectAsState().value
+    )
+}
+
+@Composable
+internal fun DetailScreenContent(
     state: DetailState
 ) {
     Box(
@@ -62,7 +73,7 @@ fun DetailScreen(
                 ) {
                     Text(
                         text = movie.title,
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(8.dp))
@@ -91,12 +102,12 @@ fun DetailScreen(
 
                     Text(
                         text = "Released in ${movie.releaseDate}".uppercase(),
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.bodyMedium
                     )
 
                     Spacer(modifier = Modifier.height(4.dp))
 
-                    Text(text = movie.description, style = MaterialTheme.typography.bodySmall)
+                    Text(text = movie.description, style = MaterialTheme.typography.bodyMedium)
                 }
             }
         }
@@ -117,9 +128,9 @@ fun DetailScreen(
 
 @Preview
 @Composable
-private fun DetailScreenPreview() {
+private fun DetailScreenContentPreview() {
     MyApplicationTheme {
-        DetailScreen(
+        DetailScreenContent(
             state = PreviewData.detailState,
         )
     }

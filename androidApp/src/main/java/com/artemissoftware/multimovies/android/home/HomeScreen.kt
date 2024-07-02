@@ -16,6 +16,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,9 +26,22 @@ import com.artemissoftware.multimovies.android.PreviewData
 import com.artemissoftware.multimovies.android.home.composables.MovieItem
 import com.artemissoftware.multimovies.android.theme.Red
 import com.artemissoftware.multimovies.domain.models.Movie
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeScreen(
+    viewModel: HomeViewModel = koinViewModel(),
+    navigateToDetail: (Movie) -> Unit
+) {
+    HomeScreenContent(
+        state = viewModel.state.collectAsState().value,
+        event = viewModel::onTriggerEvent,
+        navigateToDetail = navigateToDetail
+    )
+}
+
+@Composable
+internal fun HomeScreenContent(
     state: HomeState,
     event: (HomeEvent) -> Unit,
     navigateToDetail: (Movie) -> Unit
@@ -92,9 +106,9 @@ fun HomeScreen(
 
 @Preview
 @Composable
-private fun HomeScreenPreview() {
+private fun HomeScreenContentPreview() {
     MyApplicationTheme {
-        HomeScreen(
+        HomeScreenContent(
             state = PreviewData.homeState,
             event = {},
             navigateToDetail = {}

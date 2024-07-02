@@ -1,7 +1,9 @@
 package com.artemissoftware.multimovies.android.detail
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.artemissoftware.multimovies.android.navigation.NavArguments
 import com.artemissoftware.multimovies.domain.usecase.GetMovieUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -11,14 +13,16 @@ import kotlinx.coroutines.launch
 
 class DetailViewModel(
     private val getMovieUseCase: GetMovieUseCase,
-    private val movieId: Int
+    savedStateHandle: SavedStateHandle
 ): ViewModel(){
 
     private val _state = MutableStateFlow(DetailState())
     val state: StateFlow<DetailState> = _state.asStateFlow()
 
     init {
-        loadMovie(movieId)
+        savedStateHandle.get<Int>(NavArguments.MOVIE_ID)?.let {
+            loadMovie(it)
+        }
     }
 
     private fun loadMovie(movieId: Int) = with(_state){
