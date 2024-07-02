@@ -29,7 +29,9 @@ kotlin {
             //put your multiplatform dependencies here
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.client.logging)
             implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.napier)
 
             //Use api so that the android app can use it as well
             api(libs.koin.core)

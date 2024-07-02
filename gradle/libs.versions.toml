@@ -11,6 +11,7 @@ koinCompose = "3.4.1"
 coil = "2.2.2"
 accompanist = "0.28.0"
 navigation = "2.5.3"
+napier = "2.7.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -25,6 +26,7 @@ compose-material3 = { module = "androidx.compose.material3:material3", version.r
 
 ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-client-android = { group = "io.ktor", name = "ktor-client-android", version.ref = "ktor" }
 
@@ -46,7 +48,9 @@ navigation-compose = { group = "androidx.navigation", name = "navigation-compose
 
 accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
 
+# logging
 
+napier = { group = "io.github.aakira", name = "napier", version.ref = "napier" }
 
 
 [plugins]
