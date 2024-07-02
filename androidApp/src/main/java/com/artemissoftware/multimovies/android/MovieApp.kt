@@ -34,8 +34,7 @@ fun MovieApp() {
 
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = destinations.find {
-        backStackEntry?.destination?.route == it.route ||
-                backStackEntry?.destination?.route == it.routeWithArgs
+        backStackEntry?.destination?.route == it.fullRoute()
     }?: Route.Home
 
     Scaffold(
@@ -54,7 +53,7 @@ fun MovieApp() {
         RootNavGraph(
             innerPaddings = innerPaddings,
             navController = navController,
-            startDestination = Route.Home.route
+            startDestination = Route.Home.fullRoute()
         )
     }
 }
