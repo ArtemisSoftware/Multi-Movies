@@ -16,8 +16,6 @@ class HomeViewModel(
     private val _state = MutableStateFlow(HomeState())
     val state: StateFlow<HomeState> = _state.asStateFlow()
 
-    private var currentPage = 1
-
     init {
         loadMovies()
     }
@@ -33,14 +31,13 @@ class HomeViewModel(
         viewModelScope.launch {
             setLoading()
 
-            getMoviesUseCase(page = currentPage)
+            getMoviesUseCase(page = value.currentPage)
                 .onSuccess { result ->
-                    val movies = if (currentPage == 1) result else value.movies + result
-
-                    currentPage += 1
+                    val movies = if (value.currentPage == 1) result else value.movies + result
 
                     update {
                         it.copy(
+                            currentPage = it.currentPage + 1,
                             loading = false,
                             refreshing = false,
                             loadFinished = result.isEmpty(),
@@ -63,9 +60,9 @@ class HomeViewModel(
 
     private fun reloadMovies() = with(_state){
         if (!value.loading) {
-            currentPage = 1
             update {
                 it.copy(
+                    currentPage = 1,
                     refreshing = true,
                 )
             }
