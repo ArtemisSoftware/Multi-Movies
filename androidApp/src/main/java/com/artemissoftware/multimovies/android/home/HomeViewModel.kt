@@ -24,7 +24,8 @@ class HomeViewModel(
 
     fun onTriggerEvent(event: HomeEvent){
         when(event){
-            HomeEvent.LoadNextMovies -> {}
+            HomeEvent.LoadNextMovies -> { loadMovies() }
+            HomeEvent.ReloadMovies -> reloadMovies()
         }
     }
 
@@ -59,44 +60,21 @@ class HomeViewModel(
         }
     }
 
+    private fun reloadMovies() = with(_state){
+        if (!value.loading) {
+            currentPage = 1
+            update {
+                it.copy(
+                    refreshing = true,
+                )
+            }
+            loadMovies()
+        }
+    }
+
     private fun setLoading(isLoading: Boolean = true) = with(_state){
         update {
             it.copy(loading = isLoading)
         }
     }
-
-/*
-    private fun loadMovies(forceReload: Boolean = false){
-        if (uiState.loading) return
-        if (forceReload) currentPage = 1
-        if (currentPage == 1) uiState = uiState.copy(refreshing = true)
-
-        viewModelScope.launch {
-            uiState = uiState.copy(
-                loading = true
-            )
-
-            try {
-                val resultMovies = getMoviesUseCase(page = currentPage)
-                val movies = if (currentPage == 1) resultMovies else uiState.movies + resultMovies
-
-                currentPage += 1
-                uiState = uiState.copy(
-                    loading = false,
-                    refreshing = false,
-                    loadFinished = resultMovies.isEmpty(),
-                    movies = movies
-                )
-
-            }catch (error: Throwable){
-                uiState = uiState.copy(
-                    loading = false,
-                    refreshing = false,
-                    loadFinished = true,
-                    errorMessage = "Could not load movies: ${error.localizedMessage}"
-                )
-            }
-        }
-    }
-    */
 }

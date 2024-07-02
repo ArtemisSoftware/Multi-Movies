@@ -31,4 +31,4 @@ abstract class Destination(
     }
 }
 
-val destinations = listOf(Route.Home)
+val destinations = listOf(Route.Home, Route.Detail)

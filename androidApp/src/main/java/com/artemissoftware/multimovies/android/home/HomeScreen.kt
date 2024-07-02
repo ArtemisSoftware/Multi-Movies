@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,6 +28,9 @@ import com.artemissoftware.multimovies.android.home.composables.MovieItem
 import com.artemissoftware.multimovies.android.theme.Red
 import com.artemissoftware.multimovies.domain.models.Movie
 import org.koin.androidx.compose.koinViewModel
+import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 
 @Composable
 fun HomeScreen(
@@ -40,22 +44,29 @@ fun HomeScreen(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun HomeScreenContent(
     state: HomeState,
     event: (HomeEvent) -> Unit,
     navigateToDetail: (Movie) -> Unit
 ) {
-//    val pullRefreshState = rememberPullRefreshState(
-//        refreshing = uiState.refreshing,
-//        onRefresh = { loadNextMovies(true) }
-//    )
+    val pullRefreshState = rememberPullToRefreshState()
+    if (pullRefreshState.isRefreshing) {
+        LaunchedEffect(Unit) {
+            event(HomeEvent.ReloadMovies)
+        }
+    }
+
+    LaunchedEffect(state.refreshing) {
+        if(!state.refreshing) pullRefreshState.endRefresh()
+    }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.background)
-//            .pullRefresh(state = pullRefreshState)
+            .nestedScroll(pullRefreshState.nestedScrollConnection)
     ) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
@@ -74,7 +85,7 @@ internal fun HomeScreenContent(
 
                 if (state.isEndOfList(index)) {
                     LaunchedEffect(key1 = Unit) {
-                        event(HomeEvent.LoadNextMovies /*(false)*/)
+                        event(HomeEvent.LoadNextMovies)
                     }
                 }
             }
@@ -96,11 +107,10 @@ internal fun HomeScreenContent(
             }
         }
 
-//        PullRefreshIndicator(
-//            refreshing = uiState.refreshing,
-//            state = pullRefreshState,
-//            modifier = modifier.align(Alignment.TopCenter)
-//        )
+        PullToRefreshContainer(
+            modifier = Modifier.align(Alignment.TopCenter),
+            state = pullRefreshState,
+        )
     }
 }
 

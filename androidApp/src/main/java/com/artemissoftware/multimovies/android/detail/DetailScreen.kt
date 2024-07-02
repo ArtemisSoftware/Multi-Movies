@@ -62,13 +62,13 @@ internal fun DetailScreenContent(
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(320.dp)
+                        .weight(0.5f)
                 )
 
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .weight(1f)
+                        .weight(0.5f)
                         .padding(20.dp)
                 ) {
                     Text(
