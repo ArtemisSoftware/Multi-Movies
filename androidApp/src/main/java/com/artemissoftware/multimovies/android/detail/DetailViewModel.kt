@@ -29,22 +29,23 @@ class DetailViewModel(
         viewModelScope.launch {
             setLoading()
 
-            try {
-                val movie = getMovieUseCase(movieId = movieId)
-                update {
-                    it.copy(
-                        loading = false,
-                        movie = movie,
-                    )
+            getMovieUseCase(movieId = movieId)
+                .onSuccess { movie ->
+                    update {
+                        it.copy(
+                            loading = false,
+                            movie = movie,
+                        )
+                    }
                 }
-            } catch (error: Throwable){
-                update {
-                    it.copy(
-                        loading = false,
-                        errorMessage = "Could not load the movie"
-                    )
+                .onFailure { error ->
+                    update {
+                        it.copy(
+                            loading = false,
+                            errorMessage = "Could not load the movie"
+                        )
+                    }
                 }
-            }
         }
     }
 

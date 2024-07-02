@@ -33,30 +33,31 @@ class HomeViewModel(
         viewModelScope.launch {
             setLoading()
 
-            try {
-                val result = getMoviesUseCase(page = currentPage)
-                val movies = if (currentPage == 1) result else value.movies + result
+            getMoviesUseCase(page = currentPage)
+                .onSuccess { result ->
+                    val movies = if (currentPage == 1) result else value.movies + result
 
-                currentPage += 1
+                    currentPage += 1
 
-                update {
-                    it.copy(
-                        loading = false,
-                        refreshing = false,
-                        loadFinished = result.isEmpty(),
-                        movies = movies
-                    )
+                    update {
+                        it.copy(
+                            loading = false,
+                            refreshing = false,
+                            loadFinished = result.isEmpty(),
+                            movies = movies
+                        )
+                    }
                 }
-            } catch (error: Throwable){
-                update {
-                    it.copy(
-                        loading = false,
-                        refreshing = false,
-                        loadFinished = true,
-                        errorMessage = "Could not load movies: ${error.localizedMessage}"
-                    )
+                .onFailure { error ->
+                    update {
+                        it.copy(
+                            loading = false,
+                            refreshing = false,
+                            loadFinished = true,
+                            errorMessage = "Could not load movies: ${error.localizedMessage}"
+                        )
+                    }
                 }
-            }
         }
     }
 
